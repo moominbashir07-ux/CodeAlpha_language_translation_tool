@@ -1,0 +1,178 @@
+/* ==========================================================================
+   RESPONSIVE LAYOUT ADJUSTMENTS
+   ========================================================================== */
+
+/* --- Large Screens (Up to 1440px) --- */
+@media (max-width: 1440px) {
+  .app-container {
+    max-width: 90%;
+    padding: 30px;
+  }
+}
+
+/* --- Medium Screens / Small Desktops (Up to 1024px) --- */
+@media (max-width: 1024px) {
+  .app-container {
+    max-width: 95%;
+    padding: 25px;
+  }
+  
+  .brand-text h1 {
+    font-size: 1.6rem;
+  }
+  
+  textarea {
+    font-size: 1rem;
+    min-height: 160px;
+  }
+}
+
+/* --- Tablets (Up to 768px) --- */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  .app-container {
+    padding: 20px;
+    border-radius: var(--radius-md);
+  }
+
+  .app-header {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+  }
+  
+  .brand-text .subtitle {
+    font-size: 0.8rem;
+  }
+
+  /* Stack translator dashboard cards vertically */
+  .translator-dashboard {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .card {
+    padding: 18px;
+    gap: 15px;
+  }
+
+  /* Shrink drawer width to fit tablet screens */
+  .history-drawer {
+    width: 320px;
+    right: -320px;
+  }
+}
+
+/* --- Mobile Devices (Up to 480px / 320px) --- */
+@media (max-width: 480px) {
+  body {
+    padding: 5px;
+  }
+
+  .app-container {
+    padding: 15px;
+    border-radius: var(--radius-sm);
+  }
+
+  .brand {
+    gap: 10px;
+  }
+
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+  }
+
+  .logo-icon i {
+    font-size: 1.25rem;
+  }
+
+  .brand-text h1 {
+    font-size: 1.3rem;
+  }
+
+  .brand-text .subtitle {
+    display: none; /* Hide subtitle to preserve vertical height */
+  }
+
+  /* Make history drawer full screen on small mobiles */
+  .history-drawer {
+    width: 100vw;
+    right: -100vw;
+  }
+
+  /* Responsive layout for language selectors and swap controls */
+  .card-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .control-group {
+    width: 100%;
+  }
+
+  /* Rotate swap button vertical-wise since selectors are stacked */
+  .swap-btn {
+    align-self: center;
+    width: 40px;
+    height: 40px;
+  }
+  
+  .swap-btn i {
+    transform: rotate(90deg);
+  }
+  
+  .swap-btn:hover {
+    transform: rotate(270deg) scale(1.05);
+  }
+
+  .primary-btn {
+    width: 100%;
+    padding: 14px;
+    justify-content: center;
+  }
+
+  /* Adjust actions flow below output card */
+  .target-actions-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+
+  .left-actions {
+    justify-content: space-between;
+  }
+
+  .right-actions .copy-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .app-footer {
+    margin-top: 20px;
+    padding-top: 15px;
+    font-size: 0.75rem;
+  }
+}
+
+/* Ensure layouts down to 320px don't clip text areas */
+@media (max-width: 320px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .header-controls {
+    align-self: flex-end;
+  }
+  
+  textarea {
+    min-height: 140px;
+    padding: 12px 35px 12px 12px;
+  }
+}

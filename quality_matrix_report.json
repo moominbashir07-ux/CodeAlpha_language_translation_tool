@@ -1,0 +1,18 @@
+{
+  "success": true,
+  "totalAttempts": 380,
+  "successes": 380,
+  "failuresCount": 0,
+  "successRate": 100,
+  "scriptMatchRate": 99.74,
+  "avgSimilarityScore": 76.98,
+  "avgLatencyMs": 1176.5,
+  "providersTested": [
+    "Microsoft",
+    "MyMemoryGolden"
+  ],
+  "liveCallsCount": 305,
+  "fallbackCallsCount": 75,
+  "failuresList": [],
+  "durationMs": 109496
+}

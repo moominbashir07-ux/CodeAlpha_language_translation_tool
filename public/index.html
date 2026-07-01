@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Translate text instantly into multiple languages. Premium translation tool with Speech Synthesis, history tracking, and dark mode.">
+  <title>Language Translator - Translate Text Instantly</title>
+  
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome CDN for premium icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- Styling stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  
+  <!-- Main Glassmorphic Wrapper -->
+  <div class="app-container">
+    
+    <!-- Top Navigation Bar -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo-icon">
+          <i class="fa-solid fa-language"></i>
+        </div>
+        <div class="brand-text">
+          <h1>Language Translator</h1>
+          <p class="subtitle">Translate text instantly into multiple languages.</p>
+        </div>
+      </div>
+      
+      <div class="header-controls">
+        <!-- History Toggle Button -->
+        <button id="toggleHistoryBtn" class="icon-btn" aria-label="Toggle translation history" title="Translation History">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+        </button>
+        <!-- Dark Mode Toggle Button -->
+        <button id="themeToggleBtn" class="icon-btn" aria-label="Toggle dark mode" title="Toggle Theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+    </header>
+    
+    <!-- Main Section: Translation Dashboard -->
+    <main class="translator-dashboard">
+      
+      <!-- Left Card: Source Input Panel -->
+      <section class="card source-card" aria-labelledby="source-card-title">
+        <h2 id="source-card-title" class="sr-only">Source Language Input</h2>
+        
+        <div class="textarea-wrapper">
+          <textarea id="srcText" placeholder="Type or paste text to translate..." aria-label="Source text" maxlength="5000" rows="6"></textarea>
+          <button id="clearSrcBtn" class="clear-text-btn" aria-label="Clear source text" title="Clear text">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        
+        <div class="card-status-bar">
+          <span class="word-counter" id="wordCount">0 words</span>
+          <span class="char-counter" id="charCount">0 / 5000 characters</span>
+        </div>
+        
+        <!-- Controls area below text input -->
+        <div class="card-controls">
+          <div class="control-group">
+            <label for="srcLang" class="sr-only">Source Language</label>
+            <div class="select-wrapper">
+              <select id="srcLang" aria-label="Select source language">
+                <option value="auto">Auto Detect</option>
+                <!-- JS populated options -->
+              </select>
+              <i class="fa-solid fa-chevron-down select-arrow"></i>
+            </div>
+          </div>
+          
+          <button id="swapBtn" class="swap-btn" aria-label="Swap source and target languages" title="Swap Languages">
+            <i class="fa-solid fa-arrows-left-right"></i>
+          </button>
+          
+          <div class="control-group">
+            <label for="tgtLang" class="sr-only">Target Language</label>
+            <div class="select-wrapper">
+              <select id="tgtLang" aria-label="Select target language">
+                <!-- JS populated options -->
+              </select>
+              <i class="fa-solid fa-chevron-down select-arrow"></i>
+            </div>
+          </div>
+          
+          <button id="translateBtn" class="primary-btn" aria-label="Translate text">
+            <span class="btn-text">Translate</span>
+            <i class="fa-solid fa-arrow-right btn-icon"></i>
+            <div class="spinner-inline hidden" id="spinnerInline"></div>
+          </button>
+        </div>
+      </section>
+      
+      <!-- Right Card: Target Output Panel -->
+      <section class="card target-card" aria-labelledby="target-card-title">
+        <h2 id="target-card-title" class="sr-only">Target Language Output</h2>
+        
+        <div class="textarea-wrapper">
+          <!-- Loader Overlay when translating -->
+          <div class="loader-overlay hidden" id="loaderOverlay">
+            <div class="loader-spinner"></div>
+            <span class="loader-text">Translating...</span>
+          </div>
+          
+          <textarea id="tgtText" placeholder="Translation will appear here..." aria-label="Translated text" readonly rows="6"></textarea>
+        </div>
+        
+        <!-- Bottom Actions Row -->
+        <div class="target-actions-wrapper">
+          <div class="left-actions">
+            <!-- Text-To-Speech Controller Suit -->
+            <div class="speech-controls-group" id="ttsGroup">
+              <button id="speakBtn" class="action-btn" aria-label="Speak translation" title="Listen" disabled>
+                <i class="fa-solid fa-volume-high"></i>
+              </button>
+              
+              <div class="tts-sub-controls hidden" id="ttsSubControls">
+                <button id="pauseBtn" class="action-btn sub-btn" aria-label="Pause text-to-speech" title="Pause">
+                  <i class="fa-solid fa-pause"></i>
+                </button>
+                <button id="resumeBtn" class="action-btn sub-btn hidden" aria-label="Resume text-to-speech" title="Resume">
+                  <i class="fa-solid fa-play"></i>
+                </button>
+                <button id="stopBtn" class="action-btn sub-btn" aria-label="Stop text-to-speech" title="Stop">
+                  <i class="fa-solid fa-stop"></i>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Download Button -->
+            <button id="downloadBtn" class="action-btn" aria-label="Download translation as text file" title="Download Text" disabled>
+              <i class="fa-solid fa-download"></i>
+            </button>
+          </div>
+          
+          <div class="right-actions">
+            <!-- Copy Button -->
+            <button id="copyBtn" class="action-btn copy-btn" aria-label="Copy translated text to clipboard" title="Copy Translation" disabled>
+              <i class="fa-solid fa-copy"></i>
+              <span class="copy-text">Copy</span>
+            </button>
+          </div>
+        </div>
+      </section>
+      
+    </main>
+    
+    <!-- Sidebar Drawer: Recent Translations History -->
+    <aside class="history-drawer" id="historyDrawer" aria-labelledby="history-title" aria-hidden="true">
+      <div class="drawer-header">
+        <h3 id="history-title"><i class="fa-solid fa-clock-rotate-left"></i> History</h3>
+        <button id="closeHistoryBtn" class="icon-btn" aria-label="Close translation history drawer">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="drawer-body">
+        <ul id="historyList" class="history-list">
+          <!-- Populated by JS -->
+          <li class="history-empty">No recent translations</li>
+        </ul>
+      </div>
+      <div class="drawer-footer">
+        <button id="clearHistoryBtn" class="clear-history-btn" disabled>Clear All History</button>
+      </div>
+    </aside>
+    
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+    
+    <!-- Bottom Footer -->
+    <footer class="app-footer">
+      <p>&copy; 2026 Language Translator. Translate text instantly into multiple languages.</p>
+    </footer>
+    
+  </div>
+
+  <!-- Custom Modal Overlay -->
+  <div id="confirmationModal" class="modal-overlay hidden" aria-hidden="true">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Confirm Action</h3>
+        <button id="closeModalBtn" class="close-modal-btn" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="modalMessage">Are you sure you want to permanently delete all translation history?</p>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelModalBtn" class="modal-btn secondary">Cancel</button>
+        <button id="confirmModalBtn" class="modal-btn danger">Delete History</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Javascript Modules -->
+  <script src="js/api.js"></script>
+  <script src="js/speech.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

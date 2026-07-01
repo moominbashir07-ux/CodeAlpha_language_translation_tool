@@ -1,0 +1,29 @@
+{
+  "name": "language-translator",
+  "version": "1.0.0",
+  "description": "Premium Language Translation Web Application",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js",
+    "test": "node scratch_run_validators.js"
+  },
+  "keywords": [
+    "translator",
+    "translation",
+    "express",
+    "speech-synthesis",
+    "glassmorphism"
+  ],
+  "author": "Antigravity",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
