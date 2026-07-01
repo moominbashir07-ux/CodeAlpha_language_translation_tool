@@ -1,7 +1,7 @@
 /**
  * API client layer to communicate with the Express backend translation service
  */
-const API_BASE_URL = '/api';
+const API_BASE_URL = 'https://translation-backend-9kjo.onrender.com/api';
 
 const TranslatorAPI = {
   /**

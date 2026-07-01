@@ -8,8 +8,27 @@ const translateRoutes = require('./routes/translateRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Enable CORS for frontend flexibility
-app.use(cors());
+// Enable CORS for frontend flexibility (allowing localhost and github pages)
+const allowedOrigins = [
+  'https://moominbashir07-ux.github.io'
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    
+    const isLocalhost = origin.startsWith('http://localhost:') || 
+                        origin === 'http://localhost' || 
+                        origin.startsWith('http://127.0.0.1:') || 
+                        origin === 'http://127.0.0.1';
+                        
+    if (isLocalhost || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    
+    return callback(new Error('CORS Policy: Access from origin ' + origin + ' is not allowed.'), false);
+  }
+}));
 
 // Middleware for parsing JSON and urlencoded request bodies
 app.use(express.json());
